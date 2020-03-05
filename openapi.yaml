@@ -1,0 +1,110 @@
+swagger: '2.0'
+info:
+  description: This is a simple API
+  version: 1.0.0
+  title: Request and Report Statistics
+  # put the contact info for your development or API team
+  contact:
+    email: you@your-company.com
+
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+
+# tags are used for organizing operations
+
+paths:
+  /request/history:
+    get:
+      summary: gets history for requests
+      operationId: app.get_request_history
+      description: gets request history based on the parameter
+      produces:
+      - application/json
+      parameters:
+      - in: query
+        name: requestNum
+        required: true
+        type: integer
+      responses:
+        200:
+          description: history
+          schema:
+            $ref: '#/definitions/RequestHistory'
+        400:
+          description: object doesn't exist
+  /report/history:
+    get:
+      summary: gets oldest report
+      operationId: app.get_report_oldest
+      description: gets the oldest received report object
+      produces:
+      - application/json
+      responses:
+        200:
+          description: oldest report object
+          schema:
+            $ref: '#/definitions/ReportHistory'
+        400:
+          description: object doesn't exist
+definitions:
+  RequestHistory:
+    type: object
+    required:
+    - name
+    - location
+    - destination
+    - time
+    - notes
+    properties:
+      name:
+        type: string
+        example: Mike Tyson
+      location:
+        type: string
+        example: 12354 101b Avenue
+      destination:
+        type: string
+        example: McDonalds, 223rd St
+      time:
+        type: string
+        example: '15:00'
+      notes:
+        type: string
+        example: The house with the blue mailbox
+  ReportHistory:
+    type: object
+    required:
+    - name
+    - customer
+    - pickup
+    - dropoff
+    - pickuptime
+    - dropofftime
+    - rating
+    - notes
+    properties:
+      name:
+        type: string
+        example: Driver Driverson
+      customer:
+        type: string
+        example: Geddy Lee
+      pickup:
+        type: string
+        example: 2240 122nd St
+      dropoff:
+        type: string
+        example: Chuck-e-Cheese, 278th St
+      pickuptime:
+        type: string
+        example: '13:30'
+      dropofftime:
+        type: string
+        example: '14:15'
+      rating:
+        type: string
+        example: '4/5'
+      notes:
+        type: string
+        example: 'Polite and considerate customer'
