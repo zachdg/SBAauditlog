@@ -6,10 +6,14 @@ from pykafka import KafkaClient
 from datetime import datetime
 import yaml
 
-with open('app_conf.yaml', 'r') as f:
-    app_config = yaml.safe_load(f.read())
 
+try:
+    with open('/config/app_conf.yaml', 'r') as f:
+        app_config = yaml.safe_load(f.read())
 
+except FileNotFoundError:
+    with open('app_conf.yaml', 'r') as f:
+        app_config = yaml.safe_load(f.read())
 
 def get_request_history(requestNum):
     client = KafkaClient(hosts="{}:{}".format(app_config['kafka']['server'], app_config['kafka']['port']))
